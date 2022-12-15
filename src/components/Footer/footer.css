@@ -1,0 +1,35 @@
+.footer{
+    padding-top: 20px;
+    padding-bottom: 10px;
+    background: var(--primary-color);
+
+}
+
+.footer__text{
+    line-height: 30px;
+    color: whitesmoke;
+}
+
+.footer__quick-links ul li{
+    background:transparent !important;
+}
+
+.footer__quick-links ul li p{
+   color: whitesmoke;
+}
+
+.quick__links-title{
+    margin-bottom: 5px;
+    color: whitesmoke;
+    font-size: 1.1rem;
+}
+
+.footer__quick-links ul li {
+    color: whitesmoke;
+   
+    }
+
+ .calu{
+    margin-right: 5px;
+ }
+
