@@ -2,7 +2,12 @@
 import React from 'react';
 import {Container,Row,Col} from 'reactstrap';
 import '../styles/dashboard.css';
+import useGetData from '../custom-hooks/useGetData';
+
 const Dashboard = ()=>{
+
+    const {data: products} = useGetData('products')
+    const {data: users} = useGetData('users')
     return (
         <>
         <section>
@@ -23,13 +28,13 @@ const Dashboard = ()=>{
                     <Col className="lg-3">
                         <div className="products__box">
                             <h5>Total products</h5>
-                            <span>Num</span>
+                            <span>{products.length}</span>
                         </div>
                     </Col>
                     <Col className="lg-3">
                         <div className="users__box">
-                            <h5>Total Users</h5>
-                            <span>Num</span>
+                            <h5>Total User  s</h5>
+                            <span>{users.length}</span>
                         </div>
                     </Col>
                 </Row>

@@ -1,7 +1,7 @@
 import React, {useState, useRef, useEffect} from 'react';
 import {Container, Row, Col} from 'reactstrap';
 import { useParams } from 'react-router-dom';
-import products from '../assets/data/products';
+
 import Helmet from '../components/Helmet/Helmet';
 import CommonSection from '../components/UI/CommonSection';
 import '../styles/product-details.css';
@@ -10,17 +10,42 @@ import ProductsList from '../components/UI/ProductsList';
 import { useDispatch } from 'react-redux';
 import { cartActions } from '../redux/slices/cartSlice';
 import { toast } from 'react-toastify';
+import { db } from '../firebase.config';
+import {doc, getDoc} from 'firebase/firestore';
+import useGetData from '../custom-hooks/useGetData'
 
 const ProductDetails = ()=> {
+    const [product, setProduct] = useState[{}]
     const [tab, setTab] = useState('desc');
     const reviewUser = useRef('');
     const reviewMsg = useRef('');
     const dispatch = useDispatch();
     const [rating, setRating] = useState(null);
 const {id} = useParams();
-const product = products.find(item => item.id === id)
 
-const {imgUrl, productName, price, avgRating, reviews, description, shortDesc, category} = product;
+const {data: products} = useGetData('products')
+
+const docRef = doc (db, 'products', id)
+
+useEffect(()=>{
+    const getProduct = async ()=>{
+        const docSnap = await getDoc(docRef)
+
+        if(docSnap.exists()){
+            setProduct(docSnap.data())
+        }else{
+            console.log('no products');
+        }
+    }
+
+    getProduct()
+},[])
+
+
+const {imgUrl, productName, price,
+    //  avgRating, 
+    //  reviews, 
+     description, shortDesc, category} = product;
 
 const relatedProducts = products.filter(item=> item.category===category) 
 
@@ -73,7 +98,7 @@ window.scrollTo(0,0)
                                         </span>
                                     </div>
                                     <p>
-                                        (<span>{avgRating}</span>ratings)
+                                        {/* (<span>{avgRating}</span>ratings) */}
                                     </p>
                                 </div>
                                 <div className='d-flex align-items-center gap-5'>
@@ -97,7 +122,9 @@ window.scrollTo(0,0)
                 <Col lg='12'>
                     <div className="tab__wrapper d-flex align-items-center gap-5">
                         <h6 className={`${tab==='desc' ? 'active__tab' : ''}`} onClick={()=> setTab('desc')}>Description</h6>
-                        <h6 className={`${tab==='rev' ? 'active__tab' : ''}`}  onClick={()=> setTab('rev')}>Reviews ({reviews.length})</h6>
+                        <h6 className={`${tab==='rev' ? 'active__tab' : ''}`}  onClick={()=> setTab('rev')}>
+                            Reviews 
+                            </h6>
                     </div>
 
                     {
@@ -106,7 +133,7 @@ window.scrollTo(0,0)
                     </div> : (
                         <div className='prodct__review'>
                             <div className="reviews__wrapper">
-                                <ul>
+                                {/* <ul>
                                     {
                                         reviews?.map((item,index)=>(
                                             <li className='mt-4' key={index}>
@@ -116,7 +143,7 @@ window.scrollTo(0,0)
                                             </li>
                                         ))
                                     }
-                                </ul>
+                                </ul> */}
 
                                 <div className="review__form">
 
