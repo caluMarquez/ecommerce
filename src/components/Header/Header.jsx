@@ -123,7 +123,12 @@ const {currentUser} = useAuth()
 
                            <div className="profile__actions"  ref={profileActionRef} onClick={toggleProfileActions} >
                             {currentUser ? ( 
-                            <span onClick={logout}>Logout</span>
+                            <div className='d-flex align-items-center justify-content-center flex-column'>
+                                <span onClick={logout}>Logout</span>
+                                <Link to='/dashboard'>Dashboard</Link>
+                                <Link to='/home'>Home</Link>
+                            </div>
+                           
                              ):( 
                              <div className='d-flex align-items-center justify-content-center flex-column'>
                                     <Link to='/signup'>Signup</Link>
